@@ -8,7 +8,10 @@ class End extends Phaser.Scene {
     }
   
     create() {
-        let startimage = this.add.image( game.config.width/2, game.config.height/2, 'witchend').setScale(0.6);
+        let startimage = this.add.image( game.config.width/2, game.config.height/2, 'witchend');
+        const scaleX = game.config.width / startimage.width;
+        const scaleY = game.config.height / startimage.height;
+        startimage.setScale(scaleX, scaleY);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
   

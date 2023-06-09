@@ -30,6 +30,7 @@ class Yellow extends Phaser.Scene{
     }
 
     create(){
+      keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset', 'tilesetImage');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
@@ -37,7 +38,7 @@ class Yellow extends Phaser.Scene{
         this.tinman = this.physics.add.sprite(320, 320, 'tinman', 0);
         this.scarecrow = this.physics.add.sprite(320, 32, 'scarecrow', 0);
         this.lion = this.physics.add.sprite(100, 320, 'lion', 4);
-        this.dorothy = this.physics.add.sprite(32, 32, 'dorothy', 0);
+        this.dorothy = this.physics.add.sprite(32, 32, 'dorothy', 0).setScale(1.5);
         function createAnimations(spriteKey, animations) {
           animations.forEach(animation => {
             this.anims.create({
@@ -165,6 +166,7 @@ class Yellow extends Phaser.Scene{
     }
 
     update(){
+        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('monkeyScene')};
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
             this.dorothy.play('dorothyleft', true);
@@ -189,7 +191,7 @@ class Yellow extends Phaser.Scene{
         if(this.cursors.up.isDown){
             this.dorothy.play('dorothyback', true);
             if(collectedLion) {
-              this.lion.play('lionwalkfront', true);
+              this.lion.play('lionwalkback', true);
             }
             if(collectedTinman) {
               this.tinman.play('tinmanback', true);
@@ -225,24 +227,19 @@ class Yellow extends Phaser.Scene{
             this.scene.start("monkeyScene");
           }
         }
-        console.log("Y" + this.dorothy.y);
-        console.log("X"  + this.dorothy.x);
     }
 }
 
 function collectLion(dorothy, lion){
-    console.log("collison");
     collectedLion = true;
 }
 
 function collectScarecrow(dorothy, lion){
-  console.log("collison");
   collectedScarecrow = true;
 }
 
 
 function collectTinman(dorothy, lion){
-  console.log("collison");
   collectedTinman= true;
 }
 /*
@@ -279,7 +276,8 @@ function moveEnemy(player,enemy,path){
                 y: {
                  value: newy * map.tileHeight,
                  duration: 100
-        }
+    
+    }
       }
     );
   }

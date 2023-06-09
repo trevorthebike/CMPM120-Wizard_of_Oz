@@ -19,17 +19,16 @@ let config ={
     render: {
         pixelArt: true
     },
-    zoom: 1, 
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 680,
-        height: 480
+        width: 900/3,
+        height: 1100/3
     },
     physics: {
         default: "arcade",
         arcade: {
-            debug: true
+          //  debug: true
         }
     },
     scene: [Start, Yellow, MonkeyStart, Monkey, WitchStart, Witch, End]
