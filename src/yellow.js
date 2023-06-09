@@ -160,7 +160,7 @@ class Yellow extends Phaser.Scene{
     }
 
     update(){
-        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('monkeyScene')};
+        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('monkeyStartScene')};
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
             this.dorothy.play('dorothyleft', true);
