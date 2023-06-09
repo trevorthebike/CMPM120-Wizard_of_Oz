@@ -18,19 +18,13 @@ class Yellow extends Phaser.Scene{
           frameWidth: 28,
           frameHeight: 36
         })
-        /*this.load.spritesheet('scarecrow', 'png/scarecrow.png', {
-          frameWidth: 32,
-          frameHeight: 32
-        })*/
-        //this.load.image('tinman', 'png/tinman.png');
         this.load.image('scarecrow', 'png/ScareCrow.png');
-        //this.load.image('lion', 'png/lion.png');
         this.load.image('tilesetImage', 'png/tileset.png');
         this.load.tilemapTiledJSON('tilemapJSON', 'yellow.json');
     }
 
     create(){
-      keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset', 'tilesetImage');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
@@ -125,7 +119,7 @@ class Yellow extends Phaser.Scene{
         this.physics.add.overlap(this.dorothy, this.lion , collectLion, null, this);
         this.physics.add.overlap(this.dorothy, this.scarecrow, collectScarecrow, null, this);
         this.physics.add.overlap(this.dorothy, this.tinman, collectTinman, null, this);
-       let fkey = this.input.keyboard.addKey('F');
+        let fkey = this.input.keyboard.addKey('F');
         fkey.on(
         'down', 
         function () {
@@ -224,7 +218,7 @@ class Yellow extends Phaser.Scene{
         }
         if(collectedScarecrow && collectedLion && collectedTinman){
           if(this.dorothy.y >= 1450 && this.dorothy.x >= 1450){
-            this.scene.start("monkeyScene");
+            this.scene.start("monkeyStartScene");
           }
         }
     }
@@ -242,44 +236,3 @@ function collectScarecrow(dorothy, lion){
 function collectTinman(dorothy, lion){
   collectedTinman= true;
 }
-/*
-function createPath(player, enemy){
-    var toX = Math.floor(player.x/16);
-    var toY = Math.floor(player.y/16);
-    var fromX = Math.floor(enemy.x/16);
-    var fromY = Math.floor(enemy.y/16);
-    console.log('going from ('+fromX+','+fromY+') to ('+toX+','+toY+')');
-    finder.findPath(fromX, fromY, toX, toY, function( path ) {
-      if (path === null) {
-        console.warn("Path was not found.");
-      } else {
-        console.log(path);
-        moveEnemy(player,enemy,path);
-      }
-    });
-    finder.calculate();
-}
-
-function moveEnemy(player,enemy,path){
-    let mytimeline = game.scene.scenes[0].tweens.createTimeline();
-    let newx, newy;
-    for ( var i = 0; i < path.length-1; i++ ) {
-        newx = path[ i + 1 ].x;
-        newy = path[ i + 1 ].y;
-        mytimeline.add(
-        {
-            targets: enemy,
-                x: {
-                   value: newx * map.tileWidth,
-                   duration: 100
-                 },
-                y: {
-                 value: newy * map.tileHeight,
-                 duration: 100
-    
-    }
-      }
-    );
-  }
-  mytimeline.play();
-}*/

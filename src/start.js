@@ -11,8 +11,6 @@ class Start extends Phaser.Scene {
         let startimage = this.add.image( game.config.width/2, game.config.height/2, 'start');
         const scaleX = game.config.width / startimage.width;
         const scaleY = game.config.height / startimage.height;
-
-// Set the scale of the startimage
         startimage.setScale(scaleX, scaleY);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         collectedTinman = false;
