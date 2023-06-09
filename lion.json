@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "lion.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 194,
+				"h": 258
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "lion.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 192,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 192,
+						"h": 256
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 192,
+						"h": 256
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:69a3663a6eb3e3ab54530ae6d59029e5:c31d2eed2e30d70c3821920b303cbef1:f0e65117d63770d353e1baf22f53059b$"
+	}
+}
