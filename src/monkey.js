@@ -1,7 +1,7 @@
 class Monkey extends Phaser.Scene {
     constructor() {
         super("monkeyScene");
-        this.VEL = 100;
+        this.VEL = 200;
     }
   
     preload() {
@@ -10,14 +10,18 @@ class Monkey extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         })
-        this.load.spritesheet('monkey', 'assets/png/monkey.png', {
+        /*this.load.spritesheet('monkey', 'assets/png/monkey.png', {
             frameWidth: 48,
             frameHeight: 64
-          })
+          })*/
         this.load.tilemapTiledJSON('tilemapJSON1', 'assets/monkey1.json');
     }
   
     create() {
+        gamemusic = this.sound.add('gamemusic1');
+        gamemusic.play({
+            volume: 0.05,
+            loop: true}   );
         const map = this.add.tilemap('tilemapJSON1');
         const tileset = map.addTilesetImage('tileset', 'tilesetImage');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
@@ -32,109 +36,55 @@ class Monkey extends Phaser.Scene {
         this.physics.add.collider(this.dorothy, treeLayer);
         
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        function createAnimations(spriteKey, animations) {
-            animations.forEach(animation => {
-              this.anims.create({
-                key: animation.key,
-                frameRate: 6,
-                repeat: -1,
-                frames: this.anims.generateFrameNumbers(spriteKey, animation.frames)
-              });
-            });
-          }
-          
-        const monkeyAnimations = [
-        {
-            key: 'monkeyfront',
-            frames: { start: 6, end: 8 }
-        },
-        {
-            key: 'monkeyback',
-            frames: { start: 0, end: 2 }
-        },
-        {
-            key: 'monkeyright',
-            frames: { start: 3, end: 5 }
-        },
-        {
-            key: 'monkeyleft',
-            frames: { start: 9, end: 11 }
-        }
-        ];
-        createAnimations.call(this, 'monkey', monkeyAnimations);
         this.monkeys = this.physics.add.group();
-        for (let i = 0; i < 10; i++) {
-        const monkey = this.monkeys.create(100 + i * 50, 320, 'monkey', 3);
-            monkey.setVelocityY(monkeySpeed*Math.random());
+        for (let i = 0; i < 40; i++) {
+        const monkey = this.monkeys.create(Math.random()*1500, Math.random()*1500 , 'monkey', 3);
+            //monkey.setVelocityY(monkeySpeed*Math.random());
             monkey.play('monkeyfront');
         }
         this.dorothy.play('dorothyfront');
         this.physics.add.overlap(this.dorothy, this.monkeys, monkeyHit, null, this);
-        /*
-        let finder;
-        finder = new EasyStar.js();
-        let grid = [];
-        for (let y = 0; y < map.height; y++) {
-        let col = [];
-        for (let x = 0; x < map.width; x++) {
-            let tile = map.layers[0].data[y][x];
-            col.push(tile.index);
-        }
-        grid.push(col);
-        }
-        finder.setGrid(grid);
-
-        let tileset1 = map.tilesets[0];
-        let properties = tileset1.tileProperties; // Corrected line
-        let acceptableTiles = [];
-        console.log(tileset1.total);
-        for (let i = tileset1.firstgid - 1; i < tileset1.total; i++) {
-            if (!properties[i].collide) {
-                console.log("pushed tile");
-                acceptableTiles.push(i + 1);
-                if (properties[i].score) {
-                    finder.setTileCost(i + 1, properties[i].score);
-                }
-            }
-        }
-        finder.setAcceptableTiles(acceptableTiles);*/
+        this.changeDirectionTimer = this.time.addEvent({
+            delay: Phaser.Math.Between(100, 300), // Change direction every 3-7 seconds
+            callback: changeDirection1,
+            callbackScope: this,
+            loop: true
+          });
     }
   
     update(){
         if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('witchStartScene')};
-        this.monkeys.getChildren().forEach((monkey) => {
-            //moveEnemy(monkey, this.dorothy.x, this.dorothy.y);
-          });
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
             this.dorothy.play('dorothyleft', true);
-            this.monkeys.playAnimation('monkeyleft', true);
+           // this.monkeys.playAnimation('monkeyleft', true);
             this.direction.x = -1; 
         }
         else if(this.cursors.right.isDown){
             this.dorothy.play('dorothyright', true);
-            this.monkeys.playAnimation('monkeyright', true);
+           // this.monkeys.playAnimation('monkeyright', true);
             this.direction.x = 1; 
         }
         if(this.cursors.up.isDown){
             this.dorothy.play('dorothyback', true);
-            this.monkeys.playAnimation('monkeyback', true);
+           // this.monkeys.playAnimation('monkeyback', true);
             this.direction.y = -1; 
         }
         else if(this.cursors.down.isDown){
             this.dorothy.play('dorothyfront', true);
-            this.monkeys.playAnimation('monkeyfront', true);
+           // this.monkeys.playAnimation('monkeyfront', true);
             this.direction.y = 1; 
         }
         this.direction.normalize();
         this.dorothy.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
-        this.monkeys.children.iterate(function (monkey) {
-            if(monkey.y>1600){
-                monkey.setVelocityY(-monkeySpeed*Math.random());
-            }
-            else if(monkey.y<0){
-                monkey.setVelocityY(monkeySpeed*Math.random());
-            }
+        this.monkeys.getChildren().forEach(function(monkey) {
+            if (monkey.x > 1500 || monkey.x < 0 || monkey.y > 1500 || monkey.y < 0) {
+              monkey.x = Math.random()*1500;
+              monkey.y = Math.random()*1500;
+            }/*
+            if (monkey.y > 1500 || monkey.y < 0) {
+              monkey.y = 300+50*Math.random();
+            }*/
         });
     }
 }
@@ -142,3 +92,26 @@ class Monkey extends Phaser.Scene {
 function monkeyHit(dorothy, monkey){
    this.scene.start('witchStartScene')
 }
+
+function changeDirection1() {
+    const randomAngle = Phaser.Math.FloatBetween(0, Math.PI * 2);
+    const direction = new Phaser.Math.Vector2(Math.cos(randomAngle), Math.sin(randomAngle));
+    direction.normalize();
+  
+    // Get a random monkey from the group
+    const randomIndex = Phaser.Math.Between(0, this.monkeys.getLength() - 1);
+    const monkey = this.monkeys.getChildren()[randomIndex];
+  
+    // Update the monkey's animation based on the new direction
+    if (direction.x < 0) {
+      monkey.play('monkeyleft');
+    } else if (direction.x > 0) {
+      monkey.play('monkeyright');
+    } else if (direction.y < 0) {
+      monkey.play('monkeyback');
+    } else if (direction.y > 0) {
+      monkey.play('monkeyfront');
+    }
+  
+    monkey.setVelocity(this.VEL * direction.x, this.VEL * direction.y);
+  }
