@@ -35,12 +35,16 @@ class Monkey extends Phaser.Scene {
         }
         this.dorothy.play('dorothyfront');
         this.physics.add.overlap(this.dorothy, this.monkeys, monkeyHit, null, this);
-        this.changeDirectionTimer = this.time.addEvent({
+        this.time.delayedCall(4000, startChangeDirectionTimer, [], this);
+
+        function startChangeDirectionTimer() {
+          this.changeDirectionTimer = this.time.addEvent({
             delay: Phaser.Math.Between(100, 300),
             callback: changeDirection1,
             callbackScope: this,
             loop: true
           });
+        }
     }
   
     update(){
