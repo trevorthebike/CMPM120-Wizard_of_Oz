@@ -6,7 +6,7 @@ Timers: Implemented in monkey scene to make random movement at random time inter
         between different children of the group randomly. Used in witch scene to give random movement, and to allow
         animations to fully complete before scene transition.
 Text objects: Included in every transition stage to give the player instructions and rules
-            the animation manager: many animinations for charaters, including directional changing animation
+Animation manager: many animinations for charaters, including directional changing animation taht plays when facing that direction
 Tilemaps: multiple tilemaps for scenes with multiple layers
 
 In my game, I have added an extra level of polish to the mechanics, with unique mechanics for each scene. 
