@@ -5,15 +5,7 @@ class Monkey extends Phaser.Scene {
     }
   
     preload() {
-        this.load.image('tilesetImage', 'assets/png/tileset.png');
-        this.load.spritesheet('dorothy', 'assets/png/dorothy.png', {
-            frameWidth: 16,
-            frameHeight: 16
-        })
-        /*this.load.spritesheet('monkey', 'assets/png/monkey.png', {
-            frameWidth: 48,
-            frameHeight: 64
-          })*/
+        //this.load.image('tilesetImage', 'assets/png/tileset.png');
         this.load.tilemapTiledJSON('tilemapJSON1', 'assets/monkey1.json');
     }
   
@@ -39,13 +31,12 @@ class Monkey extends Phaser.Scene {
         this.monkeys = this.physics.add.group();
         for (let i = 0; i < 40; i++) {
         const monkey = this.monkeys.create(Math.random()*1500, Math.random()*1500 , 'monkey', 3);
-            //monkey.setVelocityY(monkeySpeed*Math.random());
             monkey.play('monkeyfront');
         }
         this.dorothy.play('dorothyfront');
         this.physics.add.overlap(this.dorothy, this.monkeys, monkeyHit, null, this);
         this.changeDirectionTimer = this.time.addEvent({
-            delay: Phaser.Math.Between(100, 300), // Change direction every 3-7 seconds
+            delay: Phaser.Math.Between(100, 300),
             callback: changeDirection1,
             callbackScope: this,
             loop: true
@@ -53,26 +44,22 @@ class Monkey extends Phaser.Scene {
     }
   
     update(){
-        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('witchStartScene')};
+        //if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('witchStartScene')}; //for debugging
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
             this.dorothy.play('dorothyleft', true);
-           // this.monkeys.playAnimation('monkeyleft', true);
             this.direction.x = -1; 
         }
         else if(this.cursors.right.isDown){
             this.dorothy.play('dorothyright', true);
-           // this.monkeys.playAnimation('monkeyright', true);
             this.direction.x = 1; 
         }
         if(this.cursors.up.isDown){
             this.dorothy.play('dorothyback', true);
-           // this.monkeys.playAnimation('monkeyback', true);
             this.direction.y = -1; 
         }
         else if(this.cursors.down.isDown){
             this.dorothy.play('dorothyfront', true);
-           // this.monkeys.playAnimation('monkeyfront', true);
             this.direction.y = 1; 
         }
         this.direction.normalize();
@@ -81,10 +68,7 @@ class Monkey extends Phaser.Scene {
             if (monkey.x > 1500 || monkey.x < 0 || monkey.y > 1500 || monkey.y < 0) {
               monkey.x = Math.random()*1500;
               monkey.y = Math.random()*1500;
-            }/*
-            if (monkey.y > 1500 || monkey.y < 0) {
-              monkey.y = 300+50*Math.random();
-            }*/
+            }
         });
     }
 }
@@ -97,12 +81,8 @@ function changeDirection1() {
     const randomAngle = Phaser.Math.FloatBetween(0, Math.PI * 2);
     const direction = new Phaser.Math.Vector2(Math.cos(randomAngle), Math.sin(randomAngle));
     direction.normalize();
-  
-    // Get a random monkey from the group
     const randomIndex = Phaser.Math.Between(0, this.monkeys.getLength() - 1);
     const monkey = this.monkeys.getChildren()[randomIndex];
-  
-    // Update the monkey's animation based on the new direction
     if (direction.x < 0) {
       monkey.play('monkeyleft');
     } else if (direction.x > 0) {
@@ -112,6 +92,5 @@ function changeDirection1() {
     } else if (direction.y > 0) {
       monkey.play('monkeyfront');
     }
-  
     monkey.setVelocity(this.VEL * direction.x, this.VEL * direction.y);
-  }
+}

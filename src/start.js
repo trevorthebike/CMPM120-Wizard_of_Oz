@@ -29,6 +29,7 @@ class Start extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32
         })
+        this.load.image('scarecrow', 'png/ScareCrow.png');
         this.load.image('start', 'jpg/start1.jpg');
         this.load.image('waterbucket', 'png/waterbucket.png');
         this.load.audio('gamemusic1', "music.ogg");
@@ -41,11 +42,18 @@ class Start extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
         const container = this.add.container(centerX, centerY);
-        const graphics = this.add.graphics();
-        graphics.fillStyle(0x000000); // Set the fill color of the box to white
-        graphics.fillRect(-textStyle.wordWrap.width / 2, -textStyle.fontSize / 2, textStyle.wordWrap.width, textStyle.fontSize);
-        container.add(graphics);
-        const text = this.add.text(0, 0, "Control Dorothy using the arrow keys to traverse the captivating land of Oz. Follow the yellow brick path as you embark on a mission to find the Lion, Tinman, and Scarecrow. Your goal is to guide all the characters to the exit, progressing to the next scene.", textStyle);
+        const text = this.add.text(0, -20, "Using the arrow keys, guide Dorothy through the land of Oz, collecting characters along the yellow brick road and reaching the end to progress to the next level. Press F for fullscreen. Press R to move onto next scene.", textStyle);
+        let fkey = this.input.keyboard.addKey('F');
+        fkey.on(
+        'down', 
+        function () {
+            if (this.scale.isFullscreen) {
+            this.scale.stopFullscreen();
+            } else {
+            this.scale.startFullscreen();
+            }
+        }, 
+        this );
         text.setOrigin(0.5);
         container.add(text);
         witchstopped = false;

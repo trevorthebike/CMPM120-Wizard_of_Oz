@@ -1,12 +1,13 @@
 /*
 Trevor Gardner
 Wizard Of Oz
-physics systems: maybe?
-cameras: camera to follow the character, very zoomed in to make map seem bigger
-particle effects: maybe?
-text objects: not yet implemented
-the animation manager: many animinations for charaters, including directional changing animation
-tilemaps: multiple tilemaps for scenes with multiple layers
+Cameras: camera to follow the character, very zoomed in to make map seem bigger
+Timers: Implemented in monkey scene to make random movement at random time intervals. Also used to select
+        between different children of the group randomly. Used in witch scene to give random movement, and to allow
+        animations to fully complete before scene transition.
+Text objects: Included in every transition stage to give the player instructions and rules
+            the animation manager: many animinations for charaters, including directional changing animation
+Tilemaps: multiple tilemaps for scenes with multiple layers
 */
 
 let config ={
@@ -23,7 +24,7 @@ let config ={
     physics: {
         default: "arcade",
         arcade: {
-          //  debug: true
+            //debug: true
         }
     },
     scene: [Start, Yellow, MonkeyStart, Monkey, WitchStart, Witch, End]
@@ -41,7 +42,7 @@ const textStyle = {
     fontFamily: "Amatic SC",
     fontStyle: "bold",
     fontSize: "16px",
-    color: "#8B0000",
+    color: "#000000",
     align: "center",
     wordWrap: { width: 300, useAdvancedWrap: true },
 };

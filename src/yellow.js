@@ -6,10 +6,8 @@ class Yellow extends Phaser.Scene{
 
     preload(){
         this.load.path = './assets/';
-        this.load.image('scarecrow', 'png/ScareCrow.png');
         this.load.image('tilesetImage', 'png/tileset.png');
         this.load.tilemapTiledJSON('tilemapJSON', 'yellow.json');
-        //this.load.audio('gamemusic1', "assets/since_2_a.m.ogg");
     }
 
     create(){
@@ -22,9 +20,9 @@ class Yellow extends Phaser.Scene{
         const tileset = map.addTilesetImage('tileset', 'tilesetImage');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
         const treeLayer = map.createLayer('Trees', tileset, 0, 0);
-        this.tinman = this.physics.add.sprite(320, 320, 'tinman', 0);
-        this.scarecrow = this.physics.add.sprite(320, 32, 'scarecrow', 0);
-        this.lion = this.physics.add.sprite(100, 320, 'lion', 4);
+        this.tinman = this.physics.add.sprite(700, 1000, 'tinman', 0);
+        this.scarecrow = this.physics.add.sprite(100, 320, 'scarecrow', 0);
+        this.lion = this.physics.add.sprite(1400, 350, 'lion', 4);
         this.dorothy = this.physics.add.sprite(32, 32, 'dorothy', 0).setScale(1.5);
         this.dorothy.play('dorothyfront');
         this.tinman.play('tinmanfront');
@@ -39,23 +37,12 @@ class Yellow extends Phaser.Scene{
         this.physics.add.overlap(this.dorothy, this.lion , collectLion, null, this);
         this.physics.add.overlap(this.dorothy, this.scarecrow, collectScarecrow, null, this);
         this.physics.add.overlap(this.dorothy, this.tinman, collectTinman, null, this);
-        let fkey = this.input.keyboard.addKey('F');
-        fkey.on(
-        'down', 
-        function () {
-            if (this.scale.isFullscreen) {
-            this.scale.stopFullscreen();
-            } else {
-            this.scale.startFullscreen();
-            }
-        }, 
-        this );
         this.yoffset = 0;
         this.xoffset = 0;
     }
 
     update(){
-        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('monkeyStartScene')};
+        //if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('monkeyStartScene')}; //for debugging
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
           this.xoffset = 50;
@@ -108,16 +95,16 @@ class Yellow extends Phaser.Scene{
         this.direction.normalize();
         this.dorothy.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
         if(collectedLion){
-            this.lion.x = this.dorothy.x+this.xoffset;
-            this.lion.y = this.dorothy.y+this.yoffset; 
+            this.lion.x = this.dorothy.x+this.xoffset*3;
+            this.lion.y = this.dorothy.y+this.yoffset*3; 
         }
         if(collectedScarecrow){
-          this.scarecrow.x = this.dorothy.x+this.xoffset*2;
-          this.scarecrow.y = this.dorothy.y+this.yoffset*2; 
+          this.scarecrow.x = this.dorothy.x+this.xoffset;
+          this.scarecrow.y = this.dorothy.y+this.yoffset; 
         }
         if(collectedTinman){
-          this.tinman.x = this.dorothy.x+this.xoffset*3;
-          this.tinman.y = this.dorothy.y+this.yoffset*3; 
+          this.tinman.x = this.dorothy.x+this.xoffset*2;
+          this.tinman.y = this.dorothy.y+this.yoffset*2; 
         }
         if(collectedScarecrow && collectedLion && collectedTinman){
           if(this.dorothy.y >= 1450 && this.dorothy.x >= 1450){

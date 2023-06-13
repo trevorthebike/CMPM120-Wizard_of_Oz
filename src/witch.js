@@ -40,24 +40,24 @@ class Witch extends Phaser.Scene {
         const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spaceKey.on('down', () => {
             let splashsound = this.sound.add('splashsound');
-            splashsound.play({
-                volume: 0.5,
-                loop: false}   );
             const playerPosition = new Phaser.Math.Vector2(this.dorothy.x, this.dorothy.y);
             const witchPosition = new Phaser.Math.Vector2(this.witch.x, this.witch.y);
             const distance = playerPosition.distance(witchPosition);
             if (distance <= 100) {
                 if(collectedBucket){
+                    splashsound.play({
+                        volume: 0.5,
+                        loop: false}   );
                     handleSpellCast.call(this);
                 }
             }
             else if(collectedBucket){
-                this.waterbucket.setScale(2); 
+                splashsound.play({
+                    volume: 0.5,
+                    loop: false}   );
                 this.waterbucket.play('splashAnim');
                 this.time.delayedCall(2000, () => {
                     this.waterbucket.setTexture('waterbucket'); 
-                    this.waterbucket.scaleX = 1; 
-                    this.waterbucket.scaleY = 1;
                 }, [], this);
             }
         });
@@ -66,7 +66,7 @@ class Witch extends Phaser.Scene {
     }      
 
     update(){
-        if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('endScene')};
+        //if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('endScene')}; //for debuggin
         this.direction = new Phaser.Math.Vector2(0);
         if(this.cursors.left.isDown){
             this.dorothy.play('dorothyleft', true);
@@ -101,7 +101,6 @@ class Witch extends Phaser.Scene {
 
 function handleSpellCast() {
     witchstopped = true;
-    console.log("Spell cast!");
     this.witch.play('splashAnim');
     this.time.delayedCall(1000, () => {
         this.scene.start('endScene');

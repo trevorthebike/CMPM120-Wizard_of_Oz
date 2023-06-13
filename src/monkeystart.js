@@ -16,7 +16,7 @@ class MonkeyStart extends Phaser.Scene {
         graphics.fillStyle(0x000000); // Set the fill color of the box to white
         graphics.fillRect(-textStyle.wordWrap.width / 2, -textStyle.fontSize / 2, textStyle.wordWrap.width, textStyle.fontSize);
         container.add(graphics);
-        const text = this.add.text(0, 0, "Use the arrow keys to skillfully avoid the monkeys.", textStyle);
+        const text = this.add.text(0, -100, "Use the arrow keys to skillfully avoid the monkeys. Press R to move onto next scene.", textStyle);
         text.setOrigin(0.5);
         container.add(text);
         gamemusic.stop();

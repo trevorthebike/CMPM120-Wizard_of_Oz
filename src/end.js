@@ -17,7 +17,7 @@ class End extends Phaser.Scene {
         graphics.fillStyle(0x000000); // Set the fill color of the box to white
         graphics.fillRect(-textStyle.wordWrap.width / 2, -textStyle.fontSize / 2, textStyle.wordWrap.width, textStyle.fontSize);
         container.add(graphics);
-        const text = this.add.text(0, 0, "Then, being at last free to do as she chose, she ran out to the court-yard to tell the Lion that the Wicked Witch of the West had come to an end, and that they were no longer prisoners in a strange land.", textStyle);
+        const text = this.add.text(0, 0, "Then, being at last free to do as she chose, she ran out to the court-yard to tell the Lion that the Wicked Witch of the West had come to an end, and that they were no longer prisoners in a strange land. Press R to move onto next scene.", textStyle);
         text.setOrigin(0.5);
         container.add(text);
         const scaleX = game.config.width / startimage.width;
