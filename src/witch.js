@@ -15,7 +15,7 @@ class Witch extends Phaser.Scene {
             volume: 0.05,
             loop: true}   );
         const map = this.add.tilemap('tilemapJSON2');
-        const tileset = map.addTilesetImage('tileset', 'tilesetImage1w');
+        const tileset = map.addTilesetImage('tileset', 'tilesetImage1');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
         const treeLayer = map.createLayer('Trees', tileset, 0, 0);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
