@@ -43,6 +43,8 @@ let witchstopped;
 let gamemusic;
 let witchmusic;
 let keyR;
+let keyM;
+let keyW;
 let monkeySpeed = 1000;
 const textStyle = {
     fontFamily: "Amatic SC",

@@ -5,7 +5,7 @@ class Monkey extends Phaser.Scene {
     }
   
     preload() {
-        //this.load.image('tilesetImage', 'assets/png/tileset.png');
+        this.load.image('tilesetImage1', 'assets/png/tileset.png');
         this.load.tilemapTiledJSON('tilemapJSON1', 'assets/monkey1.json');
     }
   
@@ -15,7 +15,7 @@ class Monkey extends Phaser.Scene {
             volume: 0.05,
             loop: true}   );
         const map = this.add.tilemap('tilemapJSON1');
-        const tileset = map.addTilesetImage('tileset', 'tilesetImage');
+        const tileset = map.addTilesetImage('tileset', 'tilesetImage1');
         const bgLayer = map.createLayer('Background', tileset, 0, 0);
         const treeLayer = map.createLayer('Trees', tileset, 0, 0);
         this.dorothy = this.physics.add.sprite(32, 32, 'dorothy', 0).setScale(1.5);

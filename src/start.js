@@ -7,7 +7,7 @@ class Start extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.spritesheet('dorothy', 'png/dorothy.png', {
             frameWidth: 16,
-            frameHeight: 16
+            frameHeight: 17
         })
         this.load.spritesheet('lion', 'png/lion.png', {
           frameWidth: 64,
@@ -38,6 +38,8 @@ class Start extends Phaser.Scene {
     }
   
     create() {
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         let startimage = this.add.image( game.config.width/2, game.config.height/2, 'start');
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
@@ -186,5 +188,7 @@ class Start extends Phaser.Scene {
   
     update(){
       if(Phaser.Input.Keyboard.JustDown(keyR)){ this.scene.start('yellowScene')};
+      if(Phaser.Input.Keyboard.JustDown(keyM)){ this.scene.start('monkeyScene')};
+      if(Phaser.Input.Keyboard.JustDown(keyW)){ this.scene.start('witchScene')};
     }
   }
